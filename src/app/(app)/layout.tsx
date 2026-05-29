@@ -1,11 +1,11 @@
 import { redirect } from 'next/navigation'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import BottomNav from '@/components/BottomNav'
 import InstallPrompt from '@/components/pwa/InstallPrompt'
 import UpdateBanner from '@/components/pwa/UpdateBanner'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createServerClient()
+  const supabase = await createClient()
 
   const {
     data: { session },

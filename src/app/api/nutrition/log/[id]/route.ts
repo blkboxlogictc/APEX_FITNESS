@@ -1,5 +1,6 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
+
+
 import type { Database } from '@/lib/supabase/types'
 import { scaleNutrition } from '@/lib/nutrition'
 import type { MealType } from '@/types/nutrition'
@@ -11,7 +12,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,
@@ -33,7 +34,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,

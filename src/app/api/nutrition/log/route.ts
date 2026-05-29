@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+﻿import { createClient } from '@/lib/supabase/server'
 import type { Database } from '@/lib/supabase/types'
 import { getFoodById, scaleNutrition } from '@/lib/nutrition'
 import { getLocalDate, type MealType, type FoodLogEntry, type NutritionFacts, EMPTY_NUTRITION, addNutrition } from '@/types/nutrition'
@@ -8,7 +7,7 @@ export const runtime = 'edge'
 
 // GET ?date=YYYY-MM-DD
 export async function GET(request: Request) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,
@@ -106,7 +105,7 @@ export async function GET(request: Request) {
 
 // POST — log a food
 export async function POST(request: Request) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,

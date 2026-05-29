@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+﻿import { createClient } from '@/lib/supabase/server'
 import OpenAI from 'openai'
 import type { Database } from '@/lib/supabase/types'
 import { getExercisesForUserEquipment, getFocusExercises, getExercisesByIds } from '@/lib/exercises'
@@ -25,7 +24,7 @@ function mainWorkCount(duration: number): string {
 }
 
 export async function POST(request: Request) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const { data: { user }, error: authError } = await supabase.auth.getUser()
 
   if (authError || !user) {

@@ -1,4 +1,4 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -22,8 +22,25 @@ export async function proxy(req: NextRequest) {
     return addSecurityHeaders(NextResponse.next())
   }
 
-  const res = NextResponse.next()
-  const supabase = createMiddlewareClient({ req, res })
+  let response = NextResponse.next({ request: { headers: req.headers } })
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() { return req.cookies.getAll() },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value))
+          response = NextResponse.next({ request: { headers: req.headers } })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+
   const { data: { session } } = await supabase.auth.getSession()
 
   // Root redirect
@@ -43,7 +60,7 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  return addSecurityHeaders(res)
+  return addSecurityHeaders(response)
 }
 
 function addSecurityHeaders(response: NextResponse): NextResponse {

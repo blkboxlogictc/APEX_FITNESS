@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+﻿import { createClient } from '@/lib/supabase/server'
 import type { Database } from '@/lib/supabase/types'
 import { searchFoods, usdaToFoodResult, offToFoodResult } from '@/lib/nutrition'
 import type { FoodResult, FoodLogEntry } from '@/types/nutrition'
@@ -10,7 +9,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const query = searchParams.get('q') ?? ''
 
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()

@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+﻿import { createClient } from '@/lib/supabase/server'
 import type { Database } from '@/lib/supabase/types'
 import {
   ACTIVITIES,
@@ -55,7 +54,7 @@ export async function GET(request: Request) {
 
 // POST — log an activity
 export async function POST(request: Request) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,

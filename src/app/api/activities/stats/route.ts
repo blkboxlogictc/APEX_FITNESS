@@ -1,6 +1,5 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import type { Database } from '@/lib/supabase/types'
+﻿import type { Database } from '@/lib/supabase/types'
+import { createClient } from '@/lib/supabase/server'
 
 export const runtime = 'edge'
 
@@ -20,7 +19,7 @@ function getMonthStart(): Date {
 }
 
 export async function GET() {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,

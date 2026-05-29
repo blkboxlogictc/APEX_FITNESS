@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+﻿import { createClient } from '@/lib/supabase/server'
 import OpenAI from 'openai'
 import type { Database } from '@/lib/supabase/types'
 import type { NutritionPlan, FitnessPlan, PlanPatch, WorkoutDay, MealStructureItem } from '@/types/plans'
@@ -29,7 +28,7 @@ export async function POST(request: Request) {
           conversationHistory: { role: 'user' | 'assistant'; content: string }[]
         }
 
-        const supabase = createRouteHandlerClient<Database>({ cookies })
+        const supabase = await createClient()
         const {
           data: { user },
           error: authError,

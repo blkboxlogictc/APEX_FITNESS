@@ -1,5 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+﻿import { createClient } from '@/lib/supabase/server'
 import OpenAI from 'openai'
 import type { Database } from '@/lib/supabase/types'
 import { getSportTrainingContext } from '@/lib/activities'
@@ -10,7 +9,7 @@ export const runtime = 'edge'
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 export async function POST(request: Request) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,
@@ -129,7 +128,7 @@ Include exactly ${sessions_per_week} training days (rest days have empty activit
 
 // DELETE — delete a sport program by ?id=
 export async function DELETE(request: Request) {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,
@@ -155,7 +154,7 @@ export async function DELETE(request: Request) {
 
 // GET — fetch user's active sport programs
 export async function GET() {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
+  const supabase = await createClient()
   const {
     data: { user },
     error: authError,
