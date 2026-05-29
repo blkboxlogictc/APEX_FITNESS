@@ -1,12 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 const PUBLIC_PATHS = ['/login', '/signup', '/onboarding', '/forgot-password', '/auth']
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl
 
-  // Allow public paths and static assets through immediately
+  // Allow static assets and public paths through immediately
   if (
     PUBLIC_PATHS.some((p) => pathname.startsWith(p)) ||
     pathname.startsWith('/_next') ||
@@ -21,18 +22,28 @@ export async function middleware(request: NextRequest) {
     return addSecurityHeaders(NextResponse.next())
   }
 
-  const response = NextResponse.next()
-  const supabase = createMiddlewareClient({ req: request, res: response })
+  const res = NextResponse.next()
+  const supabase = createMiddlewareClient({ req, res })
   const { data: { session } } = await supabase.auth.getSession()
 
-  // Redirect unauthenticated users to login
+  // Root redirect
+  if (pathname === '/') {
+    return NextResponse.redirect(new URL(session ? '/home' : '/login', req.url))
+  }
+
+  // Logged-in users don't need auth pages
+  if (session && (pathname === '/login' || pathname === '/signup')) {
+    return NextResponse.redirect(new URL('/home', req.url))
+  }
+
+  // Protected routes require auth
   if (!session) {
-    const loginUrl = new URL('/login', request.url)
+    const loginUrl = new URL('/login', req.url)
     loginUrl.searchParams.set('redirectTo', pathname)
     return NextResponse.redirect(loginUrl)
   }
 
-  return addSecurityHeaders(response)
+  return addSecurityHeaders(res)
 }
 
 function addSecurityHeaders(response: NextResponse): NextResponse {
@@ -44,5 +55,5 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|icons|.*\\.png$|.*\\.svg$).*)'],
 }
