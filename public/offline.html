@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX — Offline</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0A0A0F;
+      color: #F0F0FF;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #6C63FF, #00D4AA);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #6C63FF, #00D4AA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      color: #6B7280;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .sync-note {
+      color: #6B7280;
+      font-size: 13px;
+      margin-bottom: 36px;
+    }
+    .list {
+      background: #13131A;
+      border: 1px solid #1E1E2E;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 320px;
+      width: 100%;
+      text-align: left;
+    }
+    .list h2 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #6B7280;
+      margin-bottom: 16px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .item:last-child { margin-bottom: 0; }
+    .item .icon { font-size: 16px; width: 20px; text-align: center; }
+    .item.ok { color: #00D4AA; }
+    .item.no { color: #6B7280; }
+    .retry {
+      margin-top: 32px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6C63FF, #00D4AA);
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">A</div>
+  <h1>You're offline</h1>
+  <p class="subtitle">Don't worry — your workout tracker works offline</p>
+  <p class="sync-note">Data will sync automatically when you reconnect</p>
+
+  <div class="list">
+    <h2>While offline you can</h2>
+    <div class="item ok"><span class="icon">✅</span> Log sets during active workouts</div>
+    <div class="item ok"><span class="icon">✅</span> Browse the exercise library (cached)</div>
+    <div class="item ok"><span class="icon">✅</span> View your current plans</div>
+    <div class="item ok"><span class="icon">✅</span> Log food entries (syncs on reconnect)</div>
+    <div class="item ok"><span class="icon">✅</span> Log activities (syncs on reconnect)</div>
+    <div class="item no"><span class="icon">❌</span> AI coach chat</div>
+    <div class="item no"><span class="icon">❌</span> Food search & barcode scanning</div>
+    <div class="item no"><span class="icon">❌</span> Meal photo analysis</div>
+  </div>
+
+  <button class="retry" onclick="window.location.reload()">Try Again</button>
+</body>
+</html>

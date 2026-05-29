@@ -1,0 +1,63 @@
+{
+  "name": "APEX — AI Personal Trainer",
+  "short_name": "APEX",
+  "description": "Your AI-powered personal trainer. Workouts, nutrition, joint health, and coaching — all in one app.",
+  "start_url": "/home",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#0A0A0F",
+  "theme_color": "#6C63FF",
+  "categories": ["fitness", "health", "sports"],
+  "lang": "en",
+  "scope": "/",
+  "icons": [
+    { "src": "/icons/icon-72.png", "sizes": "72x72", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-96.png", "sizes": "96x96", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-144.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-152.png", "sizes": "152x152", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-384.png", "sizes": "384x384", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "APEX Home Dashboard"
+    },
+    {
+      "src": "/screenshots/workout.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "AI Workout Tracker"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Log Workout",
+      "short_name": "Workout",
+      "url": "/train",
+      "icons": [{ "src": "/icons/shortcut-train.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Log Food",
+      "short_name": "Nutrition",
+      "url": "/nutrition",
+      "icons": [{ "src": "/icons/shortcut-nutrition.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Ask Coach",
+      "short_name": "Coach",
+      "url": "/coach",
+      "icons": [{ "src": "/icons/shortcut-coach.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": { "preferred_width": 400 }
+}
