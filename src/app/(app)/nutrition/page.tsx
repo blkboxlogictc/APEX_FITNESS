@@ -592,13 +592,11 @@ export default function NutritionPage() {
         <div className="bg-[#13131A] border border-[#1E1E2E] rounded-card p-4">
           <div className="flex items-center gap-4">
             <CalorieRing consumed={totals?.calories ?? 0} goal={targets.calories} />
-            <div className="flex-1 flex flex-col gap-2.5">
-              <MacroRing value={totals?.protein_g ?? 0} max={targets.protein_g} label="Protein" unit="g" color="#6C63FF" />
-              <div className="flex gap-3">
-                <MacroRing value={totals?.carbs_g ?? 0} max={targets.carbs_g} label="Carbs" unit="g" color="#00D4AA" />
-                <MacroRing value={totals?.fat_g ?? 0} max={targets.fat_g} label="Fat" unit="g" color="#FF6B35" />
-                <MacroRing value={waterTotal} max={WATER_GOAL_ML} label="Water" unit="ml" color="#38BDF8" />
-              </div>
+            <div className="flex-1 grid grid-cols-2 gap-x-2 gap-y-1 place-items-center">
+              <MacroRing value={totals?.protein_g ?? 0} max={targets.protein_g} label="Protein" unit="g" color="#6C63FF" size={56} />
+              <MacroRing value={totals?.carbs_g ?? 0} max={targets.carbs_g} label="Carbs" unit="g" color="#00D4AA" size={56} />
+              <MacroRing value={totals?.fat_g ?? 0} max={targets.fat_g} label="Fat" unit="g" color="#FF6B35" size={56} />
+              <MacroRing value={waterTotal} max={WATER_GOAL_ML} label="Water" unit="ml" color="#38BDF8" size={56} />
             </div>
           </div>
 
